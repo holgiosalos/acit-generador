@@ -1,8 +1,8 @@
 /*
  * Generador.h
  *
- *  Created on: 28/01/2013
- *      Author: harssed
+ *	Created on: 28/01/2013
+ *	Author: harssed
  */
 
 #ifndef GENERADOR_H_
@@ -30,14 +30,15 @@ class Generador
 		vector <int> _espProfesionales;
 		int nProf;
 		int nProf_temp;
-		int nEsp; //
-		int nPac; //
-		int slots_disp; //
-		ofstream guardarArchivo; //
-		vector <string> bd_names; //
-		vector <int> esp_profesional_x; //
-		vector <vector<int> > set_especialidades_profesionales; //
-		vector <vector<int> > profesionales_esp; //
+		int nEsp;
+		int nPac;
+		int slots_disp;
+		ofstream guardarArchivo;
+		vector <string> bd_names;
+		vector <int> esp_profesional_x;
+		vector <vector<int> > set_especialidades_profesionales;
+		vector <vector<int> > profesionales_esp;
+		int distribucion;
 	public:
 		Generador();
 		void init();
@@ -56,25 +57,22 @@ class Generador
 		void arregloEspecialidades(int esp);
 		vector <int> especialidadesPaciente(int n);
 
-		bool compararElemento(vector <int> elementos, int j);
 		void shuffleEspecialidades();
-		int sumaAleatorios(); //FALTA IMPLEMENTACIÓN!!
+		bool compararElemento(vector <int> elementos, int j);
+//		int sumaAleatorios(); //FALTA IMPLEMENTACIÓN!!
 
-		//string getIdProfesional(int p); //
-		void save_nombre_archivo(string nombre_archivo); //
-		void get_profesionales_especialidades(); //
+		void get_profesionales_especialidades();
+		void get_especialidades_profesionales();
+		void set_slots_disponibilidad(int slots);
 
-		void set_slots_disponibilidad(int slots);  //
-		void get_especialidades_profesionales();   //
-		void leerBDIds();  //
-		void leerBD(string nombre_archivo); //
-		void getListaNombres();					   //
-		string getNombreBD(int i);
+		void leerBD(string nombre_archivo);
+		void shuffle_bd();
+		void leerBDIds();
+		void getListaNombres();
 		string getIdBD(int i);
-		void shuffle_bd();						   //
-		void get_nombres_profesionales(int n);	   //FALTA IMPLEMENACIÓN
-		void get_nombres_pacientes(int n);         //FALTA IMPLEMENACIÓN
+		string getNombreBD(int i);
 
+		void save_nombre_archivo(string nombre_archivo);
 		void save_nro_profesionales();
 		void save_nro_especialidades();
 		void save_nro_pacientes(int nro);
@@ -83,14 +81,18 @@ class Generador
 		void save_informacion_pacientes();
 
 		string generarDispoProf();
-		vector <int> aleatoriosDistintos(int, int);
-		vector <string> generarDispoPac(int ); //FALTA IMPLEMENACIÓN
-		bool compararStrElemento(vector <string>, string, int); //FALTA IMPLEMENACIÓN
+		vector <string> generarDispoPac(int);
+
+		void setDistribucion(int);
+		int getDistribucion();
+		string dispoPacDistAleatoria();
+		vector <int> dispoPacDistUni();
+		vector <int> dispoPacDistNormal();
+
+		bool compararStrElemento(vector <string>, string, int);
 		vector <int> splitStrDisponibilidad(string cadena);
-
-		vector <int> dispoPacDistNormal(); //FALTA IMPLEMENACIÓN
-
-		vector <int> dispoPacDistUni(); //FALTA IMPLEMENACIÓN
+		vector <int> aleatoriosDistintos(int, int);
+		void close_archivo();
 
 		void escribir();
 };
