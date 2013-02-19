@@ -33,6 +33,7 @@ class Generador
 		int nEsp;
 		int nPac;
 		int slots_disp;
+		int slots_dia;
 		ofstream guardarArchivo;
 		vector <string> bd_names;
 		vector <int> esp_profesional_x;
@@ -64,6 +65,7 @@ class Generador
 		void get_profesionales_especialidades();
 		void get_especialidades_profesionales();
 		void set_slots_disponibilidad(int slots);
+		void set_slots_dia(int slots);
 
 		void leerBD(string nombre_archivo);
 		void shuffle_bd();
@@ -85,7 +87,7 @@ class Generador
 
 		void setDistribucion(int);
 		int getDistribucion();
-		string dispoPacDistAleatoria();
+		string dispoPacDistNinguna();
 		vector <int> dispoPacDistUni();
 		vector <int> dispoPacDistNormal();
 

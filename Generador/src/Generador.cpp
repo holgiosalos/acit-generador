@@ -1,18 +1,14 @@
-#include <iostream>
-#include <algorithm>
-#include <vector>
-#include <set>
-#include <cstdlib>
-#include <ctime>
-
 #include <stdio.h>
 #include <gsl/gsl_rng.h>
 #include <gsl/gsl_randist.h>
 
 #include "Generador.h"
 
-/**
- *	Fecha de Creación: Mayo 09 de 2012
+/*
+ * Generador.h
+ *
+ *	Created on: 28/01/2013
+ *	Author: harssed
  */
 
 Generador::Generador(){
@@ -37,107 +33,22 @@ void Generador::init(){
 
 
 int Generador::numRange(int inf, int sup){
-    int var = 0;
+	int var = 0;
 
-    if(inf*sup<0 || inf>sup || sup<inf){
-       cout<<"ERROR!!"<<endl;
-       cout<<"inf "<<inf<<" sup "<<sup<<endl;
-    }
-    else
-    {
-        var = inf + (rand()%(sup+1 - inf));
-    }
-    return var;
+	if(inf*sup<0 || inf>sup || sup<inf){
+		cout<<"ERROR!!"<<endl;
+		cout<<"inf "<<inf<<" sup "<<sup<<endl;
+	}
+	else{
+		var = inf + (rand()%(sup+1 - inf));
+	}
+	return var;
 }
 
 
 void Generador::datosEspecialidades(){
 
 	//Identificador - NombreEspecialidad - DuraciónCita - Capacidad - NroEspecialistas
-	/**
-	vector <string> especialidad1;
-		especialidad1.push_back("1");
-		especialidad1.push_back("R. Física");
-		especialidad1.push_back("60");	//60 min
-		especialidad1.push_back("6");
-		especialidad1.push_back("10");
-
-	vector <string> especialidad2;
-		especialidad2.push_back("2");
-		especialidad2.push_back("R. Cardíaca");
-		especialidad2.push_back("60");	//60 min
-		especialidad2.push_back("6");
-		especialidad2.push_back("1");
-
-	vector <string> especialidad3;
-		especialidad3.push_back("3");
-		especialidad3.push_back("T. Lenguaje");
-		especialidad3.push_back("30");	//30 min
-		especialidad3.push_back("4");
-		especialidad3.push_back("1");
-
-	vector <string> especialidad4;
-		especialidad4.push_back("4");
-		especialidad4.push_back("T. Ocupacional");
-		especialidad4.push_back("30");	//30 min
-		especialidad4.push_back("5");
-		especialidad4.push_back("1");
-
-	vector <string> especialidad5;
-		especialidad5.push_back("5");
-		especialidad5.push_back("T. Respiratoria");
-		especialidad5.push_back("20");	//20 min
-		especialidad5.push_back("4");
-		especialidad5.push_back("1");
-
-	vector <string> especialidad6;
-		especialidad6.push_back("6");
-		especialidad6.push_back("Nutrición");
-		especialidad6.push_back("20");	//20 min
-		especialidad6.push_back("1");
-		especialidad6.push_back("1");
-
-	vector <string> especialidad7;
-		especialidad7.push_back("7");
-		especialidad7.push_back("Psicología");
-		especialidad7.push_back("20");	//20 min
-		especialidad7.push_back("1");
-		especialidad7.push_back("1");
-
-	vector <string> especialidad8;
-		especialidad8.push_back("8");
-		especialidad8.push_back("Audiología");
-		especialidad8.push_back("20");	//20 min
-		especialidad8.push_back("1");
-		especialidad8.push_back("1");
-
-	vector <string> especialidad9;
-		especialidad9.push_back("9");
-		especialidad9.push_back("Piso Pélvico");
-		especialidad9.push_back("60");	//60 min
-		especialidad9.push_back("1");
-		especialidad9.push_back("1"); //Por definir cantidad de profesionales de esta especialidad
-
-	vector <string> especialidad10;
-		especialidad10.push_back("10");
-		especialidad10.push_back("Espirometrías");
-		especialidad10.push_back("15");	//15 min
-		especialidad10.push_back("1");
-		especialidad10.push_back("1"); //Por definir cantidad de profesionales de esta especialidad
-
-	informacionEspecialidad.push_back(especialidad1);
-	informacionEspecialidad.push_back(especialidad2);
-	informacionEspecialidad.push_back(especialidad3);
-	informacionEspecialidad.push_back(especialidad4);
-	informacionEspecialidad.push_back(especialidad5);
-	informacionEspecialidad.push_back(especialidad6);
-	informacionEspecialidad.push_back(especialidad7);
-	informacionEspecialidad.push_back(especialidad8);
-	informacionEspecialidad.push_back(especialidad9);
-	informacionEspecialidad.push_back(especialidad10);
-	*/
-	///////////////////////////////////////////////////
-
 	string datos1[] = {"1","R. Física","60","6","10"};
 	vector <string> especialidad1 (datos1, datos1+5);
 
@@ -250,11 +161,11 @@ vector <int> Generador::especialidadesPaciente(int nroEsp){
 
 		do{
 			n = rand() % nEsp;
-	    }
-	    while(compararElemento(especialidades, n));
+		}
+		while(compararElemento(especialidades, n));
 
 		especialidades.push_back(n);
-	    //cout << especialidades.at(i) << " ";
+		//cout << especialidades.at(i) << " ";
 	}
 
 	return especialidades;
@@ -308,22 +219,9 @@ void Generador::get_profesionales_especialidades(){
 		profesionales_esp.push_back(aux);
 		aux.clear();
 	}
-
-	/*
-	int nPE=0;
-	for (int i= 0; i < nEsp; i++) {
-
-		nPE = (int)profesionales_esp[i].size()-1;
-		for (int j = 0; j < nPE; j++) {
-			cout<<"Esp "<<getId(i)<<" "<<profesionales_esp.at(i).at(j+1) <<endl;
-		}
-	}
-	*/
 }
 
 void Generador::get_especialidades_profesionales(){
-
-	//int intId;
 
 	for(int e=0; e<nEsp; e++){
 		arregloEspecialidades(e);
@@ -375,6 +273,11 @@ void Generador::get_especialidades_profesionales(){
 void Generador::set_slots_disponibilidad(int slots){
 	slots_disp = slots;
 }
+
+void Generador::set_slots_dia(int slots){
+	slots_dia = slots;
+}
+
 
 void Generador::leerBD(string nombre_archivo){
 
@@ -428,7 +331,6 @@ string Generador::getIdBD(int i){
 }
 
 string Generador::getNombreBD(int i){
-
 	int pos_i = bd_names.at(i).find("-") + 2;
 	int pos_f = bd_names.at(i).size() - pos_i -1;
 	string nomPr = bd_names.at(i).substr(pos_i, pos_f);
@@ -633,10 +535,8 @@ string Generador::generarDispoProf(){
 	vector <int> jornadaDispo (nDiasDispo);
 	int nJornadaDispo = 0;
 
-	int slots_dia = 12;
 	int hrs_jr_man = 5;
 	int hrs_jr_tar = 7;
-	int hrs_descanso = 0;
 	//Jornada en la cual está disponible el profesional
 	int dispo_jornada = 0;
 	//Define el inicio a partir del cual está disponible el profesional en una jornada determinada
@@ -656,12 +556,6 @@ string Generador::generarDispoProf(){
 		jornadaDispo.at(i) = nJornadaDispo;
 	}
 
-//	for(int i=0; i < nDiasDispo; i++){
-//		cout << "Día " << diasDispo.at(i)
-//			 << " Jornada " << jornadaDispo.at(i) << endl;
-//	}
-
-	//cout<<strDisp<<endl;
 
 	for(int i=0; i<slots_disp; i++){
 
@@ -679,7 +573,7 @@ string Generador::generarDispoProf(){
 					break;
 					case 1:
 						dispo_jornada = hrs_jr_tar;
-						begin_count = slots_dia*dia + hrs_jr_man + hrs_descanso;
+						begin_count = slots_dia*dia + hrs_jr_man;
 					break;
 					case 2:
 						dispo_jornada = slots_dia;
@@ -699,15 +593,6 @@ string Generador::generarDispoProf(){
 		}
 	}
 
-	//Se establecen las horas de descanso que corresponden al medio día.
-	/*
-	for(int i=0; i < (nDias-1); i++){
-		disponibilidad.at(6+12*i) = 0;
-		disponibilidad.at(7+12*i) = 0;
-	}
-	*/
-
-
 	for(int i=0; i<slots_disp; i++){
 		strDisp += itostr(disponibilidad.at(i)) + " ";
 	}
@@ -720,20 +605,35 @@ vector <string> Generador::generarDispoPac(int distrib){
 	vector <string> strDispoPac(nPac);
 	string strDisp = "";
 
+	vector <vector <int> > temporal(nPac, vector<int> (slots_disp));
+	vector <int> suma_aleatorios(slots_disp);
+
 	if(distrib == 0){
 
 		for(int i = 0; i < nPac; i++){
-			strDispoPac.at(i) = dispoPacDistAleatoria();
+			strDispoPac.at(i) = dispoPacDistNinguna();
+			temporal.at(i) = splitStrDisponibilidad(strDispoPac.at(i));
 		}
+
+		for(int i = 0; i < slots_disp; i++){
+			for(int j = 0; j < nPac; j++)
+				suma_aleatorios.at(i) += temporal.at(j).at(i);
+		}
+
+		cout<<"SUMA"<<endl;
+		int aux = 0;
+		for(int i = 0; i < slots_disp; i++){
+			aux = rint((double)suma_aleatorios.at(i)/*/10*/);
+			cout << "slot["<<i<<"]: "<<suma_aleatorios.at(i)<<"\t"<<string (aux, '*') <<endl;
+		}
+		cout<<"FIN SUMA"<<endl;
 	}
 	else{
 
 		vector <int> disponibilidad;
-		int nslots = slots_disp;//11; //6 - //slots_disp;
-		vector <vector <int> > dispoVsPac (nPac, vector<int> (nslots));
+		vector <vector <int> > dispoVsPac (nPac, vector<int> (slots_disp));
 
-		vector <int> temporal(nslots);
-
+		vector <int> temporal(slots_disp);
 
 		switch(distrib){
 			case 1:
@@ -750,14 +650,12 @@ vector <string> Generador::generarDispoPac(int distrib){
 
 
 		for(int i = 0; i < nPac; i++) {
-			for(int j = 0; j < nslots; j++){
+			for(int j = 0; j < slots_disp; j++){
 				dispoVsPac.at(i).at(j) = -1;
 			}
 		}
 
-		//vector <int> temporal(nslots);
-
-		for(int j=0; j<nslots; j++){
+		for(int j=0; j<slots_disp; j++){
 
 			if(disponibilidad.at(j) == 0){
 				for(int i=0; i<nPac; i++){
@@ -796,24 +694,22 @@ vector <string> Generador::generarDispoPac(int distrib){
 
 
 		for(int i = 0; i < nPac; i++) {
-			for(int j = 0; j < nslots; j++){
+			for(int j = 0; j < slots_disp; j++){
 				if(dispoVsPac.at(i).at(j) == -1)
 					dispoVsPac.at(i).at(j) = 0;
 			}
 		}
 
-//				Método: Imprimir
-
-//				for ( int i = 0; i < nPac; i++ ) {
-//					for ( int j = 0; j < nslots; j++ ){
-//						cout<<dispoVsPac.at(i).at(j)<<" ";
-//					}
-//					cout<<endl;
-//				}
-
+//		Método: Imprimir
+//		for ( int i = 0; i < nPac; i++ ) {
+//			for ( int j = 0; j < slots_disp; j++ ){
+//				cout<<dispoVsPac.at(i).at(j)<<" ";
+//			}
+//			cout<<endl;
+//		}
 
 		for(int i = 0; i < nPac; i++){
-			for(int j = 0; j < nslots; j++){
+			for(int j = 0; j < slots_disp; j++){
 				strDisp += itostr(dispoVsPac.at(i).at(j)) + " ";
 			}
 			strDispoPac.at(i) = strDisp;
@@ -833,7 +729,7 @@ int Generador::getDistribucion(){
 	return distribucion;
 }
 
-string Generador::dispoPacDistAleatoria(){
+string Generador::dispoPacDistNinguna(){
 	string strDisp = "";
 	for(int d=0; d<slots_disp; d++){
 		strDisp += itostr(numRange(0,1)) + " ";
@@ -851,14 +747,11 @@ vector <int> Generador::dispoPacDistUni(){
 	seed = time (NULL)*getpid();
 	gsl_rng_set (r, seed);
 
-	int slots_dia = 12;
 	double slots_ini = 0.0;
-	double slots_fin = 12.0;
+	double slots_fin = (double)slots_dia;
 
 	vector <int> arreglo(slots_disp);
-
 	const int nrolls = 1200;	//Number of experiments
-	const int nstars = 120;		//Maximum number of stars to distribute
 
 	double number;
 
@@ -878,28 +771,29 @@ vector <int> Generador::dispoPacDistUni(){
 	gsl_rng_free (r);
 
 	int suma = 0;
-	int temp = 0;
+	double porcentaje = 0;
+	int numeroPacientes = 0;
+	int nstars = 0;
 
 	for (int i=0; i<slots_disp; i++) {
-		temp = arreglo[i]*nstars/nrolls;
-		arreglo[i] = temp;
-		suma += arreglo[i];
-		cout << "slot[" << i << "]: " << arreglo[i] << " \t = " << " \t";
-		cout << string(temp,'*') << endl;
-	}
+		porcentaje = (double)arreglo[i]/100;
+//		cout<<"Porcentaje:: "<<porcentaje<<endl;
 
+		nstars = rint(arreglo[i]/*/10*/);
+		cout << "slot[" << i << "]: " << nstars << " \t = " << " \t";
+		cout << string(nstars,'*') << endl;
+
+		suma += arreglo[i];
+
+		numeroPacientes = floor((double)nPac*porcentaje);
+		arreglo[i] = numeroPacientes;
+	}
 
 	cout << endl << "Suma \t= " << suma << endl;
 
-	double porcentaje = 0;
-	int totalPacientes = nPac;
-	int numeroPacientes = 0;
-
+	cout<<"NÚMERO DE PACIENTES"<<endl;
 	for (int i=0; i<slots_disp; i++) {
-		porcentaje = (double)arreglo[i]/10;
-		numeroPacientes = floor((double)totalPacientes*porcentaje);
-		arreglo[i] = numeroPacientes;
-		cout<<numeroPacientes<<endl;
+		cout << "slot[" << i << "]: " << arreglo[i] <<endl;
 	}
 //	exit(1);
 	return arreglo;
@@ -916,19 +810,16 @@ vector <int> Generador::dispoPacDistNormal(){
 	seed = time (NULL);// * getpid();
 	gsl_rng_set (r, seed);
 
-	const int nrolls = 10000;  // number of experiments
-	const int nstars = 100;    // maximum number of stars to distribute
+	const int nrolls = 500;  //600, 1000, 10000 number of experiments
 
-	int slots = slots_disp;
-	int slots_dia = 12;
-	vector <int> arreglo (slots);
+	vector <int> arreglo (slots_disp);
 	double sigma = 1.5;
 	double mean = 2;
 
 	double sigma2 = 1.5;
 	double mean2 = 9;
 
-	double ini_jr1 = 0.0, fin_jr1 = 6.0, ini_jr2 = fin_jr1, fin_jr2 = slots;
+	double ini_jr1 = 0.0, fin_jr1 = 6.0, ini_jr2 = fin_jr1, fin_jr2 = slots_disp;
 	double number = 0.0, number2 = 0.0;
 
 	for(int a = 0; a < 6; a++){
@@ -937,12 +828,12 @@ vector <int> Generador::dispoPacDistNormal(){
 
 			number = mean + slots_dia*a + gsl_ran_gaussian(r, sigma);
 			if ((number >= (ini_jr1+slots_dia*a))&&(number <= (fin_jr1+slots_dia*a))){
-				if(number < 65) ++arreglo[int(number)];
+				if(number < slots_disp) ++arreglo[int(number)];
 			}
 //			cout<<"number "<<int(number)<<endl;
 			number2 = mean2 + slots_dia*a + gsl_ran_gaussian(r, sigma2);
 			if ((number2 >= (ini_jr2+slots_dia*a))&&(number2 <= (fin_jr2+slots_dia*a))){
-				if(number2 < 65) ++arreglo[int(number2)];
+				if(number2 < slots_disp) ++arreglo[int(number2)];
 			}
 //			cout<<"number2 "<<int(number)<<endl;
 		}
@@ -951,23 +842,30 @@ vector <int> Generador::dispoPacDistNormal(){
 	gsl_rng_free (r);
 
 	//	int suma = 0;
-	double aux = 0;
-	int aux1 = 0;
+	double porcentaje = 0;
+	double factor = 6.5;
+	int numeroPacientes = 0;
+	int nstars = 0;
 
-	for (int i=0; i<slots; i++) {
-		std::cout << "slot [" << i << "] :\t";
-		aux = (double)arreglo[i]*nstars/(nrolls*2);
-		aux1 = rint(aux);
-//		suma += aux1;
-		arreglo[i] = aux1;
-		std::cout << std::string(aux1,'*') << std::endl;
-		arreglo[i] = rint((double)aux1*nPac/100);
+	for (int i=0; i<slots_disp; i++) {
+		cout << "slot [" << i << "] : "<<arreglo[i]<<"\t";
+//		factor = (double);
+		porcentaje = (double)arreglo[i]/10; //*0.05;
+		cout<<"Porcentaje["<<i<<"]:  "<<porcentaje<<" x "<<factor<<"\t= "<<porcentaje*factor<<"\t";
+
+		nstars = rint(porcentaje);
+//		cout << "slot[" << i << "]: " << nstars << " \t = " << " \t";
+		cout << string(nstars,'*') << endl;
+
+		numeroPacientes = floor((double)nPac*porcentaje*factor/100);
+		arreglo[i] = numeroPacientes; //nstars
 	}
 //	cout<<"Suma "<<suma<<endl;
 
-//		for (int i=0; i<slots_disp; i++) {
-//			cout << "arreglo["<<i<<"] "<<arreglo[i]<<endl;
-//		}
+	cout<<"NÚMERO DE PACIENTES"<<endl;
+	for (int i=0; i<slots_disp; i++) {
+		cout << "slot[" << i << "]: " << arreglo[i] <<endl;
+	}
 //	exit(1);
 	return arreglo;
 }
@@ -978,9 +876,7 @@ bool Generador::compararStrElemento(vector <string> elementos, string elemento, 
 	vector <int> temporal;
 
 	dispoActual = splitStrDisponibilidad(elemento);
-
 //	cout<<"Tamano DispoActual "<<dispoActual.size()<<endl;
-
 
 	for(int i=0; i<limit; i++){
 		temporal = splitStrDisponibilidad(elementos.at(i));
@@ -1019,11 +915,11 @@ vector <int> Generador::aleatoriosDistintos(int nro, int max){
 
 		do{
 			n = rand() % max;
-	    }
-	    while(compararElemento(vector, n));
+		}
+		while(compararElemento(vector, n));
 
 		vector.push_back(n);
-	    //cout << vector.at(i) << " ";
+		//cout << vector.at(i) << " ";
 	}
 
 	sort(vector.begin(), vector.end());
@@ -1036,21 +932,22 @@ void Generador::close_archivo(){
 }
 
 void Generador::escribir(){
-	save_nombre_archivo("test3.0.0.txt");
+	save_nombre_archivo("test_files_gen/dist2_300pac.txt");
 	set_slots_disponibilidad(65);
+	set_slots_dia(12);
 	leerBD("bd_new.txt");
 	get_especialidades_profesionales();
 	shuffle_bd();
 	save_nro_profesionales();
 	save_nro_especialidades();
-	save_nro_pacientes(100);
+	save_nro_pacientes(300);
 	cout<<endl<<"ESPECIALIDADES"<<endl<<endl;
 	save_informacion_especialidades();
 	cout<<endl<<"PROFESIONALES"<<endl<<endl;
 	save_informacion_profesionales();
 	get_profesionales_especialidades();
 	cout<<endl<<"PACIENTES"<<endl<<endl;
-	setDistribucion(1);
+	setDistribucion(2);
 	save_informacion_pacientes();
 	close_archivo();
 }
