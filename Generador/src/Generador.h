@@ -90,6 +90,7 @@ class Generador
 		string dispoPacDistNinguna();
 		vector <int> dispoPacDistUni();
 		vector <int> dispoPacDistNormal();
+		vector <int> dispoPacDistExp();
 
 		bool compararStrElemento(vector <string>, string, int);
 		vector <int> splitStrDisponibilidad(string cadena);

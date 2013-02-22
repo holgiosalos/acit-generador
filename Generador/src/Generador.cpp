@@ -642,6 +642,9 @@ vector <string> Generador::generarDispoPac(int distrib){
 			case 2:
 				disponibilidad = dispoPacDistNormal();
 			break;
+			case 3:
+				disponibilidad = dispoPacDistExp();
+			break;
 			default:
 				cout<<"La Distribución de la Disponibilidad de los Pacientes es Incorrecta."<<endl;
 				exit(1);
@@ -892,6 +895,65 @@ bool Generador::compararStrElemento(vector <string> elementos, string elemento, 
 	return false;
 }
 
+vector <int> Generador::dispoPacDistExp(){
+
+	gsl_rng * r;
+	r = gsl_rng_alloc (gsl_rng_mt19937);
+
+	long seed;
+	seed = time (NULL);// * getpid();
+	gsl_rng_set (r, seed);
+
+	const int nrolls = 1000;  // number of experiments
+
+	vector <int> arreglo (slots_disp);
+	double number = 0.0;
+	double mu = 2.0;
+
+	for(int dia = 0; dia < 6; dia++){
+
+		for (int i=0; i<nrolls; i++) {
+			number = gsl_ran_exponential(r, mu) + slots_dia*dia;
+			if(number < (slots_disp+1))
+				++arreglo[int(number-1)];
+		}
+	}
+
+	gsl_rng_free (r);
+
+	double porcentaje = 0;
+	int numeroPacientes = 0;
+	int nPac = 100;
+	double factor = 1.5;
+	int nstars = 0;
+	double porcentaje_new = 0.0;
+	double min_porc_pac = 5;
+
+	for (int i=0; i<slots_disp; i++) {
+		std::cout << "slot [" << i << "]: "<<arreglo[i]<<"\t";
+
+		porcentaje = (double)arreglo[i]/10;
+		if(porcentaje <= 10){
+			porcentaje_new = porcentaje*factor+min_porc_pac;
+			cout<<"*";
+		}
+		else porcentaje_new = porcentaje*factor;
+
+		cout<<"Porcentaje: "<<porcentaje<<" x "<<factor<<"\t= "<<porcentaje_new<<"\t";
+
+		nstars = rint((double)porcentaje_new); //arreglo[i];
+		cout << string(nstars,'*') << endl;
+		numeroPacientes = rint((double)(nPac*porcentaje_new)/100);
+		arreglo[i] = numeroPacientes;
+	}
+
+	for (int i=0; i<slots_disp; i++) {
+		cout << "arreglo["<<i<<"] "<<arreglo[i]<<endl;
+	}
+
+	return arreglo;
+}
+
 vector <int> Generador::splitStrDisponibilidad(string cadena){
 
 	vector <int> vectorAux;
@@ -932,7 +994,8 @@ void Generador::close_archivo(){
 }
 
 void Generador::escribir(){
-	save_nombre_archivo("test_files_gen/dist2_300pac.txt");
+//	save_nombre_archivo("test_files_gen/dist3_300pac.txt");
+	save_nombre_archivo("test.txt");
 	set_slots_disponibilidad(65);
 	set_slots_dia(12);
 	leerBD("bd_new.txt");
@@ -940,14 +1003,14 @@ void Generador::escribir(){
 	shuffle_bd();
 	save_nro_profesionales();
 	save_nro_especialidades();
-	save_nro_pacientes(300);
+	save_nro_pacientes(100);
 	cout<<endl<<"ESPECIALIDADES"<<endl<<endl;
 	save_informacion_especialidades();
 	cout<<endl<<"PROFESIONALES"<<endl<<endl;
 	save_informacion_profesionales();
 	get_profesionales_especialidades();
 	cout<<endl<<"PACIENTES"<<endl<<endl;
-	setDistribucion(2);
+	setDistribucion(3);
 	save_informacion_pacientes();
 	close_archivo();
 }
