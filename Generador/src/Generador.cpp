@@ -923,7 +923,6 @@ vector <int> Generador::dispoPacDistExp(){
 
 	double porcentaje = 0;
 	int numeroPacientes = 0;
-	int nPac = 100;
 	double factor = 1.5;
 	int nstars = 0;
 	double porcentaje_new = 0.0;
@@ -994,8 +993,8 @@ void Generador::close_archivo(){
 }
 
 void Generador::escribir(){
-//	save_nombre_archivo("test_files_gen/dist3_300pac.txt");
-	save_nombre_archivo("test.txt");
+	save_nombre_archivo("test_files_gen/dist3_300pac.txt");
+//	save_nombre_archivo("test.txt");
 	set_slots_disponibilidad(65);
 	set_slots_dia(12);
 	leerBD("bd_new.txt");
@@ -1003,7 +1002,7 @@ void Generador::escribir(){
 	shuffle_bd();
 	save_nro_profesionales();
 	save_nro_especialidades();
-	save_nro_pacientes(100);
+	save_nro_pacientes(300);
 	cout<<endl<<"ESPECIALIDADES"<<endl<<endl;
 	save_informacion_especialidades();
 	cout<<endl<<"PROFESIONALES"<<endl<<endl;
