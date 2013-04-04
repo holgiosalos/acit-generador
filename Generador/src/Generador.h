@@ -40,6 +40,9 @@ class Generador
 		vector <vector<int> > set_especialidades_profesionales;
 		vector <vector<int> > profesionales_esp;
 		int distribucion;
+
+		double porcentajeRF; //04-04-2013
+		vector <int> esp_porcentajeRF; //04-04-2013
 	public:
 		Generador();
 		void init();
@@ -56,7 +59,11 @@ class Generador
 		int getCtadEspecialidades();
 		int equalsZero(int i, int f); //FALTA IMPLEMENTACIÓN!!
 		void arregloEspecialidades(int esp);
-		vector <int> especialidadesPaciente(int n);
+		vector <int> especialidadesPaciente(int n, int pac);
+
+		void set_porcentaje_minRF(double p); //04-04-2013
+		double get_porcentaje_minRF(); //04-04-2013
+		void fill_esp_porcentajeRF();
 
 		void shuffleEspecialidades();
 		bool compararElemento(vector <int> elementos, int j);

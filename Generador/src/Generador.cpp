@@ -151,13 +151,14 @@ void Generador::arregloEspecialidades(int esp){
 	}
 }
 
-vector <int> Generador::especialidadesPaciente(int nroEsp){
+vector <int> Generador::especialidadesPaciente(int nroEsp, int pac){
 
 	int n = 0;
 	vector <int> especialidades;
 	//especialidades.clear();
+	especialidades.push_back(esp_porcentajeRF.at(pac));
 
-	for(int i=0; i<nroEsp; i++){
+	for(int i=1; i<nroEsp; i++){
 
 		do{
 			n = rand() % nEsp;
@@ -170,6 +171,36 @@ vector <int> Generador::especialidadesPaciente(int nroEsp){
 
 	return especialidades;
 }
+
+void Generador::set_porcentaje_minRF(double p){
+	porcentajeRF = p/100;
+}
+
+double Generador::get_porcentaje_minRF(){
+	return porcentajeRF;
+}
+
+void Generador::fill_esp_porcentajeRF(){
+
+	int posFinalRF = (int)(nPac*porcentajeRF);
+
+	for(int i=0; i<posFinalRF; i++)
+		esp_porcentajeRF.push_back(0);
+
+	int esp_aleatoria = 0;
+
+	for(int i=posFinalRF; i<nPac; i++){
+		esp_aleatoria = rand() % nEsp;
+		esp_porcentajeRF.push_back(esp_aleatoria);
+	}
+
+//	random_shuffle(esp_porcentajeRF.begin(),esp_porcentajeRF.end());
+
+	for(int i=0; i<(int)esp_porcentajeRF.size(); i++)
+		cout << esp_porcentajeRF[i]<< " ";
+}
+
+
 
 void Generador::shuffleEspecialidades(){
 	random_shuffle(_espProfesionales.begin(),_espProfesionales.end());
@@ -480,7 +511,7 @@ void Generador::save_informacion_pacientes(){
 		cout<<i+1<<") "<<getIdBD(nProf+i)<<" '"<<getNombreBD(nProf+i)<<"' "<<nTrat<<" ";
 		guardarArchivo<<getIdBD(nProf+i)<<" '"<<getNombreBD(nProf+i)<<"' "<<nTrat<<" ";
 
-		espPac = especialidadesPaciente(nTrat);
+		espPac = especialidadesPaciente(nTrat, i);
 
 		for(int j=0; j<nTrat;j++){
 
@@ -876,28 +907,6 @@ vector <int> Generador::dispoPacDistNormal(){
 	return arreglo;
 }
 
-bool Generador::compararStrElemento(vector <string> elementos, string elemento, int limit){
-
-	vector <int> dispoActual;
-	vector <int> temporal;
-
-	dispoActual = splitStrDisponibilidad(elemento);
-//	cout<<"Tamano DispoActual "<<dispoActual.size()<<endl;
-
-	for(int i=0; i<limit; i++){
-		temporal = splitStrDisponibilidad(elementos.at(i));
-
-		for(int j=0; j<(int)dispoActual.size();j++){
-			if( (temporal.at(j) == dispoActual.at(j)) && (temporal.at(j) == 1) ){
-				return true;
-			}
-		}
-		//temporal.clear();
-	}
-
-	return false;
-}
-
 vector <int> Generador::dispoPacDistExp(){
 
 	gsl_rng * r;
@@ -1035,6 +1044,28 @@ vector <int> Generador::splitStrDisponibilidad(string cadena){
 	return vectorAux;
 }
 
+bool Generador::compararStrElemento(vector <string> elementos, string elemento, int limit){
+
+	vector <int> dispoActual;
+	vector <int> temporal;
+
+	dispoActual = splitStrDisponibilidad(elemento);
+//	cout<<"Tamano DispoActual "<<dispoActual.size()<<endl;
+
+	for(int i=0; i<limit; i++){
+		temporal = splitStrDisponibilidad(elementos.at(i));
+
+		for(int j=0; j<(int)dispoActual.size();j++){
+			if( (temporal.at(j) == dispoActual.at(j)) && (temporal.at(j) == 1) ){
+				return true;
+			}
+		}
+		//temporal.clear();
+	}
+
+	return false;
+}
+
 vector <int> Generador::aleatoriosDistintos(int nro, int max){
 
 	int n = 0;
@@ -1070,13 +1101,15 @@ void Generador::escribir(){
 	shuffle_bd();
 	save_nro_profesionales();
 	save_nro_especialidades();
-	save_nro_pacientes(100);
+	save_nro_pacientes(10);
 	cout<<endl<<"ESPECIALIDADES"<<endl<<endl;
 	save_informacion_especialidades();
 	cout<<endl<<"PROFESIONALES"<<endl<<endl;
 	save_informacion_profesionales();
 	get_profesionales_especialidades();
 	cout<<endl<<"PACIENTES"<<endl<<endl;
+	set_porcentaje_minRF(45); //04-04-2013
+	fill_esp_porcentajeRF();  //04-04-2013
 	setDistribucion(4);
 	save_informacion_pacientes();
 	close_archivo();
