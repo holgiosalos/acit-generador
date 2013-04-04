@@ -92,6 +92,8 @@ class Generador
 		vector <int> dispoPacDistNormal();
 		vector <int> dispoPacDistExp();
 
+		vector <int> dispoPacDistExp_max(); //04-04-2013
+
 		bool compararStrElemento(vector <string>, string, int);
 		vector <int> splitStrDisponibilidad(string cadena);
 		vector <int> aleatoriosDistintos(int, int);
