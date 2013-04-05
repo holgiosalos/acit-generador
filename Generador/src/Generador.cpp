@@ -158,7 +158,7 @@ vector <int> Generador::especialidadesPaciente(int nroEsp, int pac){
 	//especialidades.clear();
 	especialidades.push_back(esp_porcentajeRF.at(pac));
 
-	for(int i=1; i<nroEsp; i++){
+	for(int i=0; i<nroEsp; i++){
 
 		do{
 			n = rand() % nEsp;
@@ -196,8 +196,10 @@ void Generador::fill_esp_porcentajeRF(){
 
 //	random_shuffle(esp_porcentajeRF.begin(),esp_porcentajeRF.end());
 
+	cout<<"PORCENTAJE DE ESPECIALIDADES RF"<<endl;
 	for(int i=0; i<(int)esp_porcentajeRF.size(); i++)
-		cout << esp_porcentajeRF[i]<< " ";
+		cout << (esp_porcentajeRF[i]+1)<< " ";
+	cout<<endl<<endl;
 }
 
 
@@ -685,7 +687,6 @@ vector <string> Generador::generarDispoPac(int distrib){
 			break;
 		}
 
-
 		for(int i = 0; i < nPac; i++) {
 			for(int j = 0; j < slots_disp; j++){
 				dispoVsPac.at(i).at(j) = -1;
@@ -787,7 +788,7 @@ vector <int> Generador::dispoPacDistUni(){
 	double slots_ini = 0.0;
 	double slots_fin = (double)slots_dia;
 
-	vector <int> arreglo(slots_disp);
+	vector <int> arreglo (slots_disp, 0);
 	const int nrolls = 1200;	//Number of experiments
 
 	double number;
@@ -798,9 +799,11 @@ vector <int> Generador::dispoPacDistUni(){
 			number = gsl_rng_uniform (r);
 			number = number*slots_dia + slots_dia*a;
 
-			if ((number >= (slots_ini+slots_dia*a)) && (number <= (slots_fin+slots_dia*a))){
-				if(arreglo[int(number)] < 100) //numPac)
-					++arreglo[int(number)];
+			if(number <= slots_disp){
+				if ((number >= (slots_ini+slots_dia*a)) && (number <= (slots_fin+slots_dia*a))){
+					if(arreglo[int(number)] < 100) //numPac)
+						++arreglo[int(number)];
+				}
 			}
 		}
 	}
@@ -812,11 +815,12 @@ vector <int> Generador::dispoPacDistUni(){
 	int numeroPacientes = 0;
 	int nstars = 0;
 
+//	cout<<"Tamaño "<<arreglo.size()<<endl;
 	for (int i=0; i<slots_disp; i++) {
 		porcentaje = (double)arreglo[i]/100;
 //		cout<<"Porcentaje:: "<<porcentaje<<endl;
 
-		nstars = rint(arreglo[i]/*/10*/);
+		nstars = rint(arreglo[i]);
 		cout << "slot[" << i << "]: " << nstars << " \t = " << " \t";
 		cout << string(nstars,'*') << endl;
 
@@ -829,6 +833,8 @@ vector <int> Generador::dispoPacDistUni(){
 	cout << endl << "Suma \t= " << suma << endl;
 
 	cout<<"NÚMERO DE PACIENTES"<<endl;
+	cout<<slots_disp<<endl;
+
 	for (int i=0; i<slots_disp; i++) {
 		cout << "slot[" << i << "]: " << arreglo[i] <<endl;
 	}
@@ -1093,7 +1099,7 @@ void Generador::close_archivo(){
 
 void Generador::escribir(){
 //	save_nombre_archivo("test_files_gen/dist3_300pac.txt");
-	save_nombre_archivo("test.txt");
+	save_nombre_archivo("test_04042013.txt");
 	set_slots_disponibilidad(65);
 	set_slots_dia(12);
 	leerBD("bd_new.txt");
@@ -1101,7 +1107,7 @@ void Generador::escribir(){
 	shuffle_bd();
 	save_nro_profesionales();
 	save_nro_especialidades();
-	save_nro_pacientes(10);
+	save_nro_pacientes(10); //Hay problemas para cuando es 10 y la distribución es 1
 	cout<<endl<<"ESPECIALIDADES"<<endl<<endl;
 	save_informacion_especialidades();
 	cout<<endl<<"PROFESIONALES"<<endl<<endl;
@@ -1110,7 +1116,7 @@ void Generador::escribir(){
 	cout<<endl<<"PACIENTES"<<endl<<endl;
 	set_porcentaje_minRF(45); //04-04-2013
 	fill_esp_porcentajeRF();  //04-04-2013
-	setDistribucion(4);
+	setDistribucion(1);
 	save_informacion_pacientes();
 	close_archivo();
 }
