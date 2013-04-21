@@ -194,7 +194,7 @@ void Generador::fill_esp_porcentajeRF(){
 		esp_porcentajeRF.push_back(esp_aleatoria);
 	}
 
-//	random_shuffle(esp_porcentajeRF.begin(),esp_porcentajeRF.end());
+	random_shuffle(esp_porcentajeRF.begin(),esp_porcentajeRF.end());
 
 	cout<<"PORCENTAJE DE ESPECIALIDADES RF"<<endl;
 	for(int i=0; i<(int)esp_porcentajeRF.size(); i++)
@@ -798,7 +798,7 @@ vector <int> Generador::dispoPacDistUni(){
 		for (int i=0; i<nrolls; i++) {
 			number = gsl_rng_uniform (r);
 			number = number*slots_dia + slots_dia*a;
-
+			// Writing outside your array bounds: http://stackoverflow.com/questions/3836664/glibc-detected-malloc-memory-corruption-0xb6179bb8-when-calling-new-keyword-c
 			if(number <= slots_disp){
 				if ((number >= (slots_ini+slots_dia*a)) && (number <= (slots_fin+slots_dia*a))){
 					if(arreglo[int(number)] < 100) //numPac)
@@ -932,8 +932,8 @@ vector <int> Generador::dispoPacDistExp(){
 
 		for (int i=0; i<nrolls; i++) {
 			number = gsl_ran_exponential(r, mu) + slots_dia*dia;
-			if(number < (slots_disp+1))
-				++arreglo[int(number-1)];
+			if(number < slots_disp)
+				++arreglo[int(number)];
 		}
 	}
 
@@ -991,8 +991,8 @@ vector <int> Generador::dispoPacDistExp_max(){
 
 		for (int i=0; i<nrolls; i++) {
 			number = gsl_ran_exponential(r, mu) + slots_dia*dia;
-			if(number < (slots_disp+1))
-				++arreglo[int(number-1)];
+			if(number < slots_disp)
+				++arreglo[int(number)];
 		}
 	}
 
@@ -1098,8 +1098,7 @@ void Generador::close_archivo(){
 }
 
 void Generador::escribir(){
-//	save_nombre_archivo("test_files_gen/dist3_300pac.txt");
-	save_nombre_archivo("test_04042013.txt");
+	save_nombre_archivo("test_files_gen/dist4_150pac.txt");
 	set_slots_disponibilidad(65);
 	set_slots_dia(12);
 	leerBD("bd_new.txt");
@@ -1107,7 +1106,7 @@ void Generador::escribir(){
 	shuffle_bd();
 	save_nro_profesionales();
 	save_nro_especialidades();
-	save_nro_pacientes(10); //Hay problemas para cuando es 10 y la distribución es 1
+	save_nro_pacientes(150);
 	cout<<endl<<"ESPECIALIDADES"<<endl<<endl;
 	save_informacion_especialidades();
 	cout<<endl<<"PROFESIONALES"<<endl<<endl;
@@ -1116,7 +1115,8 @@ void Generador::escribir(){
 	cout<<endl<<"PACIENTES"<<endl<<endl;
 	set_porcentaje_minRF(45); //04-04-2013
 	fill_esp_porcentajeRF();  //04-04-2013
-	setDistribucion(1);
+	setDistribucion(4);
 	save_informacion_pacientes();
 	close_archivo();
+	cout<<endl<< "FIN EJECUCIÓN" <<endl;
 }
