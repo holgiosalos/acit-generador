@@ -1,0 +1,21 @@
+Actividades Propuestas Mayo 05 de 2013
+
+1) Aumentar el tiempo de disponibilidad del Profesional
+2) Disminuir el número de especialidades del Profesional
+3)+ Disminuir el número de especialidades que requiere el Paciente
+4)+ Definir el número de citas máximo a las distintas Especialidades.
+
+Para el caso de:
+
+* Piso Pélivo
+* Espirometrías
+* Audiología
+* Nutrición
+
+El número de citas será 1
+ 
+5) Asegurar de que si un Profesional no está disponible en una Especialidad sí lo esté en la otra.
+6)+ Reducir el número máximo de citas del Paciente a 4
+
+Solucionados
+3) 4) 6)

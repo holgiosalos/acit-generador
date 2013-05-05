@@ -48,36 +48,36 @@ int Generador::numRange(int inf, int sup){
 
 void Generador::datosEspecialidades(){
 
-	//Identificador - NombreEspecialidad - DuraciónCita - Capacidad - NroEspecialistas
-	string datos1[] = {"1","R. Física","60","6","10"};
-	vector <string> especialidad1 (datos1, datos1+5);
+	//Id - NombreEspecialidad - DuraciónCita - Capacidad - NroEspecialistas - NroMaxCitas
+	string datos1[] = {"1","R. Física","60","6","10","-1"};
+	vector <string> especialidad1 (datos1, datos1+6);
 
-	string datos2[] = {"2","R. Cardíaca","60","6","1"};
-	vector <string> especialidad2 (datos2, datos2+5);
+	string datos2[] = {"2","R. Cardíaca","60","6","1","-1"};
+	vector <string> especialidad2 (datos2, datos2+6);
 
-	string datos3[] = {"3","T. Lenguaje","30","4","1"};
-	vector <string> especialidad3 (datos3, datos3+5);
+	string datos3[] = {"3","T. Lenguaje","30","4","1","-1"};
+	vector <string> especialidad3 (datos3, datos3+6);
 
-	string datos4[] = {"4","T. Ocupacional","30","5","1"};
-	vector <string> especialidad4 (datos4, datos4+5);
+	string datos4[] = {"4","T. Ocupacional","30","5","1","-1"};
+	vector <string> especialidad4 (datos4, datos4+6);
 
-	string datos5[] = {"5","T. Respiratoria","20","4","1"};
-	vector <string> especialidad5 (datos5, datos5+5);
+	string datos5[] = {"5","T. Respiratoria","20","4","1","-1"};
+	vector <string> especialidad5 (datos5, datos5+6);
 
-	string datos6[] = {"6","Nutrición","20","1","1"};
-	vector <string> especialidad6 (datos6, datos6+5);
+	string datos6[] = {"6","Nutrición","20","1","1","1"};
+	vector <string> especialidad6 (datos6, datos6+6);
 
-	string datos7[] = {"7","Psicología","20","1","1"};
-	vector <string> especialidad7 (datos7, datos7+5);
+	string datos7[] = {"7","Psicología","20","1","1","-1"};
+	vector <string> especialidad7 (datos7, datos7+6);
 
-	string datos8[] = {"8","Audiología","20","1","1"};
-	vector <string> especialidad8 (datos8, datos8+5);
+	string datos8[] = {"8","Audiología","20","1","1","1"};
+	vector <string> especialidad8 (datos8, datos8+6);
 
-	string datos9[] = {"9","Piso Pélvico","60","1","1"};
-	vector <string> especialidad9 (datos9, datos9+5);
+	string datos9[] = {"9","Piso Pélvico","60","1","1","1"};
+	vector <string> especialidad9 (datos9, datos9+6);
 
-	string datos10[] = {"10","Espirometrías","15","1","1"};
-	vector <string> especialidad10 (datos10, datos10+5);
+	string datos10[] = {"10","Espirometrías","15","1","1","1"};
+	vector <string> especialidad10 (datos10, datos10+6);
 
 	informacionEspecialidad.push_back(especialidad1);
 	informacionEspecialidad.push_back(especialidad2);
@@ -119,6 +119,13 @@ int Generador::getNroProfesionales(int e){
 	int nroEspecialistas=0;
 	nroEspecialistas = atoi(informacionEspecialidad[e][4].c_str());
 	return nroEspecialistas;
+}
+
+
+int Generador::getNroCitasMaxEsp(int e){
+	int nroCitas = 0;
+	nroCitas = atoi(informacionEspecialidad[e][5].c_str());
+	return nroCitas;
 }
 
 
@@ -487,13 +494,14 @@ void Generador::save_informacion_pacientes(){
 	//int esp_paciente; //Especialidad que requiere el paciente
 
 	int cPac, cPac1, cPac2;//, ePac;
-	cPac1 = 1; cPac2 = 5;
+	cPac1 = 2; cPac2 = 4;
 	//cout << "Citas paciente" << endl;
 	//cout << "Lim Inferior :: "; cin >> cPac1;
 	//cout << "Lim Superior :: "; cin >> cPac2;
 
 	int nTrat, nTrat1, nTrat2;
-	nTrat1 = 1; nTrat2 = 3;
+	nTrat1 = 1; nTrat2 = 2;
+	int nCitas = 0;
 	//cout << "No. Tratamientos del paciente" << endl;
 	//cout << "Lim Inferior :: "; cin >> nTrat1;
 	//cout << "Lim Superior :: "; cin >> nTrat2;
@@ -517,7 +525,11 @@ void Generador::save_informacion_pacientes(){
 
 		for(int j=0; j<nTrat;j++){
 
-			cPac = numRange(cPac1, cPac2);
+			nCitas = getNroCitasMaxEsp(espPac.at(j));
+
+			if(nCitas == -1)
+				cPac = numRange(cPac1, cPac2);
+			else cPac = 1;
 
 			int id1 = 0;
 			int pos_e = 0;
@@ -1098,7 +1110,8 @@ void Generador::close_archivo(){
 }
 
 void Generador::escribir(){
-	save_nombre_archivo("test_files_gen/dist4_150pac.txt");
+	//save_nombre_archivo("test_files_gen/dist4_150pac.txt");
+	save_nombre_archivo("test_finals/100pac.txt");
 	set_slots_disponibilidad(65);
 	set_slots_dia(12);
 	leerBD("bd_new.txt");
@@ -1106,7 +1119,7 @@ void Generador::escribir(){
 	shuffle_bd();
 	save_nro_profesionales();
 	save_nro_especialidades();
-	save_nro_pacientes(150);
+	save_nro_pacientes(100);
 	cout<<endl<<"ESPECIALIDADES"<<endl<<endl;
 	save_informacion_especialidades();
 	cout<<endl<<"PROFESIONALES"<<endl<<endl;
@@ -1115,7 +1128,7 @@ void Generador::escribir(){
 	cout<<endl<<"PACIENTES"<<endl<<endl;
 	set_porcentaje_minRF(45); //04-04-2013
 	fill_esp_porcentajeRF();  //04-04-2013
-	setDistribucion(4);
+	setDistribucion(2);
 	save_informacion_pacientes();
 	close_archivo();
 	cout<<endl<< "FIN EJECUCIÓN" <<endl;

@@ -54,6 +54,7 @@ class Generador
 		string getDuracion(int e);
 		int getCapacidadPacientes(int e);
 		int getNroProfesionales(int e);
+		int getNroCitasMaxEsp(int e);
 
 		int calcularNroTotalProfesionales();
 		int getCtadEspecialidades();
