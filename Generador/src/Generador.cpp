@@ -263,6 +263,8 @@ void Generador::get_profesionales_especialidades(){
 
 void Generador::get_especialidades_profesionales(){
 
+	int unsigned nMaxEP = 2;
+
 	for(int e=0; e<nEsp; e++){
 		arregloEspecialidades(e);
 	}
@@ -277,7 +279,7 @@ void Generador::get_especialidades_profesionales(){
 
 		esp_profesional_x.push_back(_espProfesionales.at(i));
 
-		if(esp_profesional_x.size()<3){
+		if(esp_profesional_x.size()<nMaxEP){
 
 			if(compararElemento(esp_profesional_x, _espProfesionales.at(i+1))){
 
@@ -568,13 +570,15 @@ void Generador::save_informacion_pacientes(){
 	}
 }
 
+
 string Generador::generarDispoProf(){
 
 	string strDisp = "";
 	vector <int> disponibilidad (slots_disp,0);
 
 	int nDias = 6;
-	int nDiasDispo = numRange(1,nDias);
+	int nMinDiasDispo = 3;
+	int nDiasDispo = numRange(nMinDiasDispo,nDias);
 	vector <int> diasDispo (aleatoriosDistintos(nDiasDispo, nDias));
 
 	vector <int> jornadaDispo (nDiasDispo);
