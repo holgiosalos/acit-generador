@@ -1,14 +1,12 @@
 //============================================================================
-// Name        : Generador.cpp
+// Name        : main.cpp
 // Author      : Harssed
-// Version     :
-// Copyright   : Your copyright notice
-// Description : Hello World in C++, Ansi-style
+// Version     : 1.0
+// Last Update : 28/01/2013
 //============================================================================
 
 #include <iostream>
 #include <stdio.h>
-//#include <gsl/gsl_sf_bessel.h>
 
 #include "Generador.h"
 

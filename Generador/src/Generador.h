@@ -1,9 +1,9 @@
-/*
- * Generador.h
- *
- *	Created on: 28/01/2013
- *	Author: harssed
- */
+//============================================================================
+// Name        : Generador.h
+// Author      : Harssed
+// Version     : 1.0
+// Last Update : 28/01/2013
+//============================================================================
 
 #ifndef GENERADOR_H_
 #define GENERADOR_H_
@@ -41,8 +41,8 @@ class Generador
 		vector <vector<int> > profesionales_esp;
 		int distribucion;
 
-		double porcentajeRF; //04-04-2013
-		vector <int> esp_porcentajeRF; //04-04-2013
+		double porcentajeRF;
+		vector <int> esp_porcentajeRF;
 	public:
 		Generador();
 		void init();
@@ -58,17 +58,15 @@ class Generador
 
 		int calcularNroTotalProfesionales();
 		int getCtadEspecialidades();
-		int equalsZero(int i, int f); //FALTA IMPLEMENTACIÓN!!
 		void arregloEspecialidades(int esp);
 		vector <int> especialidadesPaciente(int n, int pac);
 
-		void set_porcentaje_minRF(double p); //04-04-2013
-		double get_porcentaje_minRF(); //04-04-2013
+		void set_porcentaje_minRF(double p);
+		double get_porcentaje_minRF();
 		void fill_esp_porcentajeRF();
 
 		void shuffleEspecialidades();
 		bool compararElemento(vector <int> elementos, int j);
-//		int sumaAleatorios(); //FALTA IMPLEMENTACIÓN!!
 
 		void get_profesionales_especialidades();
 		void get_especialidades_profesionales();
@@ -100,7 +98,7 @@ class Generador
 		vector <int> dispoPacDistNormal();
 		vector <int> dispoPacDistExp();
 
-		vector <int> dispoPacDistExp_max(); //04-04-2013
+		vector <int> dispoPacDistLog();
 
 		bool compararStrElemento(vector <string>, string, int);
 		vector <int> splitStrDisponibilidad(string cadena);
